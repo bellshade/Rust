@@ -4,4 +4,4 @@ version = "0.1.0"
 authors = ["arfy slowy <slowy.arfy@gmail.com>"]
 
 [dependencies]
-math = "0.10.0"
+math = "0.09.0"

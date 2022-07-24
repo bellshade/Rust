@@ -1,5 +1,5 @@
 use crate::math::PCG32;
-use std::time::{SystemTime, UNIX_EPOCH}
+use std::time::{SystemTime, UNIX_EPOCH};
 
 const DEFAULT: u64 = 4294967296;
 

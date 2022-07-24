@@ -13,13 +13,15 @@ where
     }
 
     let mut prev = &arr[0];
-    
+
     for item in arr.iter().skip(1) {
         if prev > item {
             return false;
         }
-        prev = item
+
+        prev = item;
     }
+
     true
 }
 
@@ -28,7 +30,8 @@ mod tests {
     #[test]
     fn is_sorted() {
         use super::*;
-        assert!(is_sorted(&[] as &[size]));
+
+        assert!(is_sorted(&[] as &[isize]));
         assert!(is_sorted(&["a"]));
         assert!(is_sorted(&[1, 2, 3]));
         assert!(is_sorted(&[0, 1, 1]));
@@ -37,4 +40,3 @@ mod tests {
         assert_eq!(is_sorted(&[2, 3, 1, -1, 5]), false);
     }
 }
-

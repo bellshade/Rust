@@ -1,5 +1,5 @@
 [package]
-name = "functions"
+name = "ownership"
 version = "0.1.0"
 edition = "2021"
 authors = ["Rahman Hakim <rahmanhakim2435@protonmail.com>"]

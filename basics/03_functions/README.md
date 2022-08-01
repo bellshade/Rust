@@ -17,7 +17,7 @@ fn a_function_with_param(a: i32) -> i32 {
 }
 ```
 
-Saat sebuah fungsi mengembalikan nilai, kita harus menuliskan secara eksplisit tipe apa yang ia kembalikan. Lalu karena Rust merupakan _expression-oriented language_, kita tidak perlu menuliskan keyword `return` pada saat mengembalikan nilai. Cukup menuliskan nilai yang dikembalikan tanpa titik koma.
+Saat sebuah fungsi mengembalikan nilai, kita harus menuliskan secara eksplisit tipe apa yang ia kembalikan dengan tanda `->`. Lalu karena Rust merupakan _expression-oriented language_, kita tidak perlu menuliskan keyword `return` pada saat mengembalikan nilai. Cukup menuliskan nilai yang dikembalikan tanpa titik koma seperti yang terlihat diatas.
 
 ### Early Return
 
@@ -50,7 +50,7 @@ fn main() {
     println!("Sebelum prosedur: {}", a);
     change_value(&mut a);
     // 8
-    println!("Setelah prosedur: {}", b);
+    println!("Setelah prosedur: {}", a);
 }
 ```
 

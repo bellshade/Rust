@@ -217,7 +217,7 @@ fn main() {
 }
 ```
 
-Pada kode di atas, terlihat bahwa kita dapat memasukkan tipe apapun yang mengimplementasikan `Animal`. Karena Rust memiliki trait-based generics, jadi manipulasi yang terjadi kepada tipe yang mengimplementasikan trait tersebut ada pada methodnya, yang didefinisikan didalam traitnya seperti method `name()` yang ada pada trait `Animal` yang kita pakai berulang kali di dalam implementasi `Pet`. Dengan begitu, kita dapat melakukan operasi yang bertujuan sama, namun implementasinya berbeda pada setiap tipe. Dengan demikian, kita dapat membuat sebuah fungsi yang dapat digunakan untuk tipe yang berbeda-beda, namun memiliki implementasi yang sama yang pada kode di atas, merupakan method dari `Pet`.
+Pada kode di atas, terlihat bahwa kita dapat memasukkan tipe apapun yang mengimplementasikan `Animal`. Karena Rust memiliki trait-based generics, jadi manipulasi yang terjadi kepada tipe yang mengimplementasikan trait tersebut ada pada methodnya, yang didefinisikan didalam traitnya seperti method `name()` yang ada pada trait `Animal` yang kita pakai berulang kali di dalam implementasi `Pet`. Karena itulah ada _constraint_ atau batasan yaitu trait, dimana method yang dipakai harus berada dalam trait yang kita pakai sebagai constraint. Dengan begitu, kita dapat melakukan operasi yang bertujuan sama, namun implementasinya berbeda pada setiap tipe. Dengan demikian, kita dapat membuat sebuah fungsi yang dapat digunakan untuk tipe yang berbeda-beda, namun memiliki implementasi yang sama yang pada kode di atas, merupakan method dari `Pet`.
 
 # LATIHAN
 

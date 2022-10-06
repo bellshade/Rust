@@ -35,7 +35,7 @@ fn main() {
 }
 ```
 
-Dengan begini, kita telah berhasil membuat sebuah trait dan mengimplementasikannya pada sebuah struct.
+Dengan begini, kita telah berhasil membuat sebuah trait dan mengimplementasikannya pada sebuah struct. Method `make_sound()` pada trait `Animal` dapat kita panggil pada instance dari struct `Cat`.
 
 Kalian pasti bertanya-tanya, kenapa kita tidak langsung saja membuat method `make_sound()` pada struct `Cat`? Nah, memang tidak berarti untuk membuat satu `trait` untuk satu tipe saja. Karena itu, kita akan membuat satu tipe lagi yang akan mengimplementasikan `Animal`.
 
@@ -73,7 +73,7 @@ fn main() {
 
 Dan hasilnya akan dikeluarkan sesuai dengan masing-masing implementasi dari method `make_sound`. Untuk misalnya fungsi yang melakukan hal yang sama untuk banyak tipe, kita tidak perlu membuat banyak fungsi untuk masing-masing tipe. Cukup satu dimana perbedaan yang muncul akan tergantung dengan implementasi didalam tipe itu sendiri.
 
-Keyword `dyn` diatas harus digunakan bila kita memakai `trait` sebagai paramter. Namun, ada cara yang lebih baik selain menggunakan keyword `dyn`, yaitu degan generics.
+Keyword `dyn` diatas harus digunakan bila kita memakai `trait` sebagai parameter. Namun, ada cara yang lebih baik selain menggunakan keyword `dyn` terutama bila kita menginginkan untuk memakai lebih dari satu trait, yaitu dengan generics.
 
 ```rust
 fn make_animal_sound<T: Animal>(animal: T) {

@@ -9,8 +9,8 @@ Semua boleh ikut berkontribusi walaupun hal kecil dengan pengecualian sebagai be
   - Jika ditemukan kesamaan, maka tidak akan kami `merge`.
 - Hasil kerja kamu akan berlisensi [MIT](LICENSE) ketika permintaan pull kamu sudah di merged.
 - Hasil kerja kamu wajib mengikuti standar dan style koding dari kami.
-- Penggunaan nama file bersifat `camelCase` dan berlaku juga untuk variable dan identifier.
-- Menggunakan output `console.log()`.
+- Penggunaan nama file bersifat `snake_case` dan berlaku juga untuk variable dan identifier.
+- Menggunakan output `println!`.
 - Menghindari penggunaan library pada koding (jika dibutuhkan silahkan diskusi di [issue](https://github.com/bellshade/Rust/issues)).
 
 ## Apa Itu Algoritma?

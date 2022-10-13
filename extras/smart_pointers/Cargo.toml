@@ -1,5 +1,5 @@
 [package]
-name = "bellshade_intermediate"
+name = "bellshade_smartptrs"
 version = "0.1.0"
 edition = "2021"
 

@@ -2,7 +2,6 @@
 mod tests {
     #[test]
     fn intro() {
-
         let a = "Bellshade!";
 
         println!("Hello World!");

@@ -4,10 +4,9 @@ mod tests {
     fn multiply(a: i32, b: i32) -> i32 {
         todo!()
     }
-    
+
     #[test]
     fn start() {
-        
         let a = 10;
         let b = 20;
 

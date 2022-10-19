@@ -2,7 +2,6 @@
 members = [
     "basics/01_introduction",
     "basics/02_variables",
-    "basics/03_functions",
     "basics/04_ownership",
     "basics/05_enumeration_dan_pattern_matching",
     "basics/06_result_dan_option_type",

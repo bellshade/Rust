@@ -2,9 +2,5 @@
 mod tests {
 
     #[test]
-    fn start() {
-        
-
-
-    }
+    fn start() {}
 }

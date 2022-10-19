@@ -15,6 +15,7 @@ mod tests {
 
         assert_eq!("Selamat Datang di Bellshade", greet(a));
 
-        assert_eq!("Semoga mendapat ilmu di Bellshade", greet_2(a));
+        // Uncomment baris di bawah untuk melihat error
+        // assert_eq!("Semoga mendapat ilmu di Bellshade", greet_2(a));
     }
 }

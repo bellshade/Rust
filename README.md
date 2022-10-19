@@ -15,11 +15,11 @@ Disini kalian akan belajar tentang Rust, disertai dengan latihan dalam bentuk te
 
 ![Rust](https://www.rust-lang.org/static/images/rust-social-wide.jpg)
 
-Rust merupakan bahasa pemrograman yang dikembangkan oleh Tony Hoare di Mozilla Foundation. Bahasa ini rilis apda tahun 2014, dan dapat dikatakan masih sangat baru. Akan tetapi, komunitas Rust sangatlah cepat berkembang. Bahkan, Rust menjadi bahasa pemrograman paling dicintai berdasarkan survei Stack Overflow.
+Rust merupakan bahasa pemrograman yang awalnya dikembangkan oleh Tony Hoare di Mozilla Foundation. Bahasa ini rilis pada tahun 2014. Kemudian pada 2021 Rust dikembangkan di bawah naungan [Rust Foundation](https://foundation.rust-lang.org/). Rust menjadi bahasa pemrograman paling dicintai berdasarkan survei Stack Overflow selama tujuh tahun berturut-turut (2015 - 2022).
 
 ### Mengapa Belajar Rust?
 
-Rust memiliki keunikan tersendiri untuk keamanan memori tanpa menggunakan garbage collector. Itu yang membuatnya menjadi bahasa pemrograman yang cepat pada runtime karena tidak adanya garbage collector, namun tetap menjaga keamanan memori. Rust sangatlah ekspresif dan juga memiliki fitur-fitur powerful seperti `enum` yang dapat memiliki nilai, `trait` sebagai interface yang dapat diimplementasikan bahkan pada tipe yang tidak kita definisikan, pattern matching, dan `if let`.
+Bahasa Rust memiliki keunikan tersendiri dalam hal keamanan manajemen memori. Rust menekankan programmer untuk mendesain program dengan peraturan tertentu agar programmer tidak melakukan hal-hal yang menimbulkan hal yang tidak aman dalam manajemen memori. Dengan memaksa desain yang aman, bahasa Rust tidak memerlukan bantuan manajemen memori pada _runtime_ program (Seperti _garbage collector_ pada Java) yang dapat menimbulkan _overhead_. Rust sangatlah ekspresif dan juga memiliki fitur-fitur powerful seperti `enum` yang dapat memiliki nilai, `trait` sebagai interface yang dapat diimplementasikan bahkan pada tipe yang tidak kita definisikan, pattern matching, dan `if let`.
 
 ### Panduan Penggunaan
 
@@ -28,6 +28,3 @@ Repositori ini memiliki sistem baca-latihan dimana setiap selesai membaca, kalia
 ### Berkontribusi
 
 Kontribusi kalian akan sangat dihargai dan diperlukan untuk menyempurnakan repositori ini sebagai sarana edukasi gratis. Bila ingin berkontribusi, silahkan fork, dan buka pull request baru pada repositori ini.
-
-
-

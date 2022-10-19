@@ -1,7 +1,19 @@
-[package]
-name = "bellshade_rust"
-version = "0.1.0"
-authors = ["arfy slowy <slowy.arfy@gmail.com>"]
+[workspace]
+members = [
+    "basics/01_introduction",
+    "basics/02_variables",
+    "basics/03_functions",
+    "basics/04_ownership",
+    "basics/05_enumeration_dan_pattern_matching",
+    "basics/06_result_dan_option_type",
+    "basics/07_conditional",
+    "basics/08_loop",
+    "basics/09_struct_dan_implementation",
+    "basics/10_trait",
+    
+    "intermediate/01_generics",
+    
+    "algorithms",
 
-[dependencies]
-math = "0.9.1"
+    "extras/smart_pointers"
+]

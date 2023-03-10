@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengenalan &#8212; Pengenalan Rust Bahasa Indonesia</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Pencarian" href="search.html" />
+    <link rel="next" title="Variabel" href="Variabel.html" />
+    <link rel="prev" title="Rust-docs:Pengenalan Rust Bahasa Indonesia" href="index.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Pengenalan Rust Bahasa Indonesia</span></a></h1>
+        <h2 class="heading"><span>Pengenalan</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Rust-docs:Pengenalan Rust Bahasa Indonesia</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Variabel.html">Variabel</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <div class="section" id="pengenalan">
+<h1><a class="toc-backref" href="#id1">Pengenalan</a><a class="headerlink" href="#pengenalan" title="Permalink to this heading">¶</a></h1>
+<div class="contents topic" id="overview">
+<p class="topic-title">Overview</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pengenalan" id="id1">Pengenalan</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pengenalan-umum" id="id2">Pengenalan Umum</a></p></li>
+<li><p><a class="reference internal" href="#instalasi-dan-cargo" id="id3">Instalasi dan Cargo</a></p>
+<ul>
+<li><p><a class="reference internal" href="#instalasi-rust" id="id4">Instalasi Rust</a></p></li>
+<li><p><a class="reference internal" href="#cargo" id="id5">Cargo</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="pengenalan-umum">
+<h2><a class="toc-backref" href="#id2">Pengenalan Umum</a><a class="headerlink" href="#pengenalan-umum" title="Permalink to this heading">¶</a></h2>
+<p>Rust merupakan bahasa pemrograman yang dikembangkan oleh Graydon Hoare dan disokong oleh <a class="reference external" href="https://en.wikipedia.org/wiki/Mozilla_Foundation">Mozilla Foundation</a> pada 2014 lalu. Rust memaksakan keamanan memory yang berarti, semua references pada Rust adalah valid, dan menunjuk pada memory yang benar-benar ada. Rust mencapainya tanpa penggunaan garbage collector.</p>
+<p>Bagi pemula, bahkan developer berpengalaman sekalipun, Rust akan terasa agak menyulitkan di awal. Berikut adalah struktur kode Rust:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span><span class="w"></span>
+<span class="c1">// Entry Point</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="instalasi-dan-cargo">
+<h2><a class="toc-backref" href="#id3">Instalasi dan Cargo</a><a class="headerlink" href="#instalasi-dan-cargo" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="instalasi-rust">
+<h3><a class="toc-backref" href="#id4">Instalasi Rust</a><a class="headerlink" href="#instalasi-rust" title="Permalink to this heading">¶</a></h3>
+<p>Cara Instalasi Rust yang paling umum adalah dengan menggunakan <a class="reference external" href="https://rustup.rs/">rustup</a>. Pada halaman web tersebut, OS kalian akan otomatis terdeteksi dan kalian dapat langsung mengikuti instruksi yang ada untuk menginstall Rust. Sebuah prompt akan bertanya pada anda tentang apa saja yang ingin anda install.</p>
+<p>Bila kalian telah menginstall Rust lewat rustup, jalankanlah command berikut untuk mengecek instalasi dan versi dari Rust dan Cargo:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="o">--</span><span class="n">version</span><span class="w"></span>
+<span class="n">rustc</span><span class="w"> </span><span class="o">--</span><span class="n">version</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cargo">
+<h3><a class="toc-backref" href="#id5">Cargo</a><a class="headerlink" href="#cargo" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Cargo merupakan package manager Rust. Cargo digunakan untuk mulai dari pembuatan project, kompilasi, hingga pemasangan package.</dt><dd><ul class="simple">
+<li><p>Pembuatan Package</p></li>
+<li><p>Kompilasi Program</p></li>
+<li><p>Cargo.toml</p></li>
+<li><p>Instalasi Package</p></li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="pembuatan-package">
+<h4>Pembuatan Package<a class="headerlink" href="#pembuatan-package" title="Permalink to this heading">¶</a></h4>
+<p>Tanpa membuat pusing, package disini dapat kalian artikan sebagai project. Ini adalah cara untuk membuat sebuah project baru pada Rust. Untuk membuat sebuah package baru pada Rust, kita dapat memilih apakah package kita akan menjadi sebuah library, atau binary. By default, cargo akan membuat sebuah binary package. Karena itu, untuk membuat sebuah library, dibutuhkan flag <code class="docutils literal notranslate"><span class="pre">--lib</span></code>.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="o">--</span><span class="n">lib</span><span class="w"> </span><span class="n">library_saya</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Command diatas akan membuat sebuah package baru Rust dengan <code class="docutils literal notranslate"><span class="pre">lib.rs</span></code> didalamnya. Untuk membuat sebuah package binary, cukup buat sebuah project tanpa flag apapun, atau menggunakan <code class="docutils literal notranslate"><span class="pre">--bin</span></code> sebagai substitusi flag <code class="docutils literal notranslate"><span class="pre">--lib</span></code> diatas.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">binary_saya</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Project anda akan terstruktur seperti ini:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span>├── Cargo.toml
+└── src
+ └── main.rs
+</pre></div>
+</div>
+</div>
+<div class="section" id="kompilasi-program">
+<h4>Kompilasi Program<a class="headerlink" href="#kompilasi-program" title="Permalink to this heading">¶</a></h4>
+<p>Untuk mengkompilasi seluruh project Rust, kita juga menggunakan cargo. Kita dapat membangun, mengecek error, ataupun langsung menjalankan sebuah project Rust bagi project binary.</p>
+<p>Setelah menjalankan perintah <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">new</span> <span class="pre">binary_saya</span></code> diatas, akan ada sebuah program hello world pada <code class="docutils literal notranslate"><span class="pre">main.rs</span></code>. Kalian dapat menggunakannya untuk mengetes kompilasi Rust dengan menjalankan:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">run</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dan program akan langsung berjalan. Kalian juga dapat melakukan <code class="docutils literal notranslate"><span class="pre">build</span></code> tanpa menjalankannya langsung dengan command:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">build</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dan tergantung apakah build kalian merupakan <code class="docutils literal notranslate"><span class="pre">release</span></code> atau <code class="docutils literal notranslate"><span class="pre">debug</span></code>, package kalian akan berada dalam folder <code class="docutils literal notranslate"><span class="pre">target/</span></code>.</p>
+<p>Yang terakhir, dikarenakan kompilasi program pada Rust cukup lama, bila ingin mengecek error, kita tidak harus membangun project kita berulang kali. Kita cukup menggunakan</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">check</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Untuk mengecek apakah ada error berlangsung.</p>
+</div>
+<div class="section" id="cargo-toml">
+<h4>Cargo.toml<a class="headerlink" href="#cargo-toml" title="Permalink to this heading">¶</a></h4>
+<p>File <code class="docutils literal notranslate"><span class="pre">Cargo.toml</span></code> merupakan sebuah file yang berisi semua detail tentang project kita mulai dari nama package, versi package, hingga nama author. Pada file <code class="docutils literal notranslate"><span class="pre">Cargo.toml</span></code> jugalah kita menuliskan nama-nama package dan versi package yang kita inginkan.</p>
+</div>
+<div class="section" id="instalasi-package">
+<h4>Instalasi Package<a class="headerlink" href="#instalasi-package" title="Permalink to this heading">¶</a></h4>
+<p>Untuk menginstall package yang ingin kita gunakan pada sebuah project Rust, kita menuliskannya di <cite>Cargo.toml</cite>. Penulisannya ada dibawah tag <cite>[dependencies]</cite> seperti berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">toml</span><span class="w"></span>
+<span class="p">[</span><span class="n">dependencies</span><span class="p">]</span><span class="w"></span>
+<span class="n">serde</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.0.140&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dan package akan terinstall ketika kita menjalankan <code class="docutils literal notranslate"><span class="pre">build</span></code> atau <code class="docutils literal notranslate"><span class="pre">run</span></code>. Yang kedua adalah, bila kita ingin menginstall package binary, maka kita dapat menggunakan command <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">install</span></code> seperti berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">diesel_cli</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Rust-docs:Pengenalan Rust Bahasa Indonesia</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Variabel.html">Variabel</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Hak cipta 2023, mukharomdev.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

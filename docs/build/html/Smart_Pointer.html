@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Pointer &#8212; Pengenalan Rust Bahasa Indonesia</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Pencarian" href="search.html" />
+    <link rel="next" title="Cargo" href="Cargo.html" />
+    <link rel="prev" title="Generic" href="Generic.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Pengenalan Rust Bahasa Indonesia</span></a></h1>
+        <h2 class="heading"><span>Smart Pointer</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Generic.html">Generic</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Cargo.html">Cargo</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <div class="section" id="smart-pointer">
+<h1><a class="toc-backref" href="#id1">Smart Pointer</a><a class="headerlink" href="#smart-pointer" title="Permalink to this heading">¶</a></h1>
+<div class="contents topic" id="overview">
+<p class="topic-title">Overview</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#smart-pointer" id="id1">Smart Pointer</a></p>
+<ul>
+<li><p><a class="reference internal" href="#box-smart-pointer" id="id2">Box Smart Pointer</a></p>
+<ul>
+<li><p><a class="reference internal" href="#penggunaan-box-lebih-mendalam" id="id3">Penggunaan Box Lebih Mendalam</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deref-trait" id="id4"><cite>Deref</cite> Trait</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dereferencing" id="id5">Dereferencing</a></p></li>
+<li><p><a class="reference internal" href="#apa-itu-trait-deref" id="id6">Apa itu Trait <cite>Deref</cite>?</a></p></li>
+<li><p><a class="reference internal" href="#mendefinisikan-smart-pointer-kita-sendiri" id="id7">Mendefinisikan smart pointer kita sendiri</a></p></li>
+<li><p><a class="reference internal" href="#mengimplementasikan-deref-pada-smart-pointer-kita" id="id8">Mengimplementasikan <cite>Deref</cite> pada smart pointer kita</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deref-coercion" id="id9">Deref Coercion</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="box-smart-pointer">
+<h2><a class="toc-backref" href="#id2">Box Smart Pointer</a><a class="headerlink" href="#box-smart-pointer" title="Permalink to this heading">¶</a></h2>
+<p>Sebuah pointer, sebuah konsep umum untuk sebuah variabel yang menyimpan alamat memory. Alamat memory ini menunjuk - pointing pada sebuah data. Smart Pointer, atau pointer pintar namun, adalah struktur data yang tidak hanya berperilaku seperti sebuah pointer, namun juga memiliki kapabilitas lain. Konsep smart pointer ini berawal dari C++.</p>
+<p>Di artikel ini, kita akan membahas penggunaan Box, sebuah smart pointer yang sangat umum digunakan di Rust. Box digunakan untuk menunjuk pada data di heap. Box memiliki kapabilitas untuk mengalokasikan data di heap dan menghapusnya ketika sudah tidak digunakan.</p>
+<p>Penggunaan Box adalah sebagai berikut</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">boxed_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">boxed_value</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dalam kode diatas, kita mengalokasikan 10 yang merupakan sebuah integer - tipe primitif pada heap, yang seharusnya ada pada stack. Box tidak mengimplementasikan <code class="docutils literal notranslate"><span class="pre">Copy</span></code> karena ia bukan tipe primitif sehingga, bila ingin menggunakannya berulang kali, kita harus menggunakan borrow (&amp;), atau clone untuk variabel box.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">boxed_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">clone_box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">boxed_value</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clone_box</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="penggunaan-box-lebih-mendalam">
+<h3><a class="toc-backref" href="#id3">Penggunaan Box Lebih Mendalam</a><a class="headerlink" href="#penggunaan-box-lebih-mendalam" title="Permalink to this heading">¶</a></h3>
+<p>Sekarang, lihat <code class="docutils literal notranslate"><span class="pre">enum</span></code> berikut</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">enum</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">Nil</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">enum</span></code> di atas merupakan struktur data <code class="docutils literal notranslate"><span class="pre">Cons</span> <span class="pre">List</span></code> yang berasal dari bahasa Lisp. Struktur data diatas akan terus memuat data di dalam varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code> secara rekursif hingga ia menemukan <code class="docutils literal notranslate"><span class="pre">Nil</span></code>. Setelah menemukan <code class="docutils literal notranslate"><span class="pre">Nil</span></code>, ia akan berhenti disana tanpa data apapun lagi. Bila kalian sudah membaca bab <code class="docutils literal notranslate"><span class="pre">enum</span></code>, kalian pasti mengerti cara kerjanya.</p>
+<p>Namun, perlu ditegaskan bahwa <code class="docutils literal notranslate"><span class="pre">enum</span></code> di atas tidak akan bekerja. Mengapa?</p>
+<p>Rust harus mengetahui berapa besar ruang yang sebuah tipe ambil pada saat compile time. Sedangkan pada <code class="docutils literal notranslate"><span class="pre">enum</span></code> diatas, ia bersifat rekursif yang dalam teori, dia dapat berulang selamanya - tidak terbatas. Ia dapat terus memuat varian <cite>Cons</cite> yang memuat tipe <cite>List</cite> yang berupa varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code> juga dan terus begitu. Rust tidak mengetahui berapa besar si <code class="docutils literal notranslate"><span class="pre">enum</span></code> <code class="docutils literal notranslate"><span class="pre">List</span></code> pada saat compile time.</p>
+<p>Mari kita coba mengimplementasikan contoh Cons List diatas lalu kita compile.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">enum</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">Nil</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">use</span><span class="w"> </span><span class="n">List</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span><span class="w"> </span><span class="n">Nil</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Bila kita mengcompile kode diatas, kita akan mendapatkan error berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span>2 | enum List&lt;T&gt; {
+  | ^^^^^^^^^^^^ recursive type has infinite size
+3 |     Cons(T, List&lt;T&gt;),
+  |             ------- recursive without indirection
+  |
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
+  |
+3 |     Cons(T, Box&lt;List&lt;T&gt;&gt;),
+</pre></div>
+</div>
+<p>Error diatas menunjukkan bahwa kita memiliki tipe rekursif dengan ukuran tidak terbatas - rekursif tanpa indirection. Error diatas juga membantu kita dengan memberitahu bahwa kita harus me-wrap <code class="docutils literal notranslate"><span class="pre">List</span></code> dalam <code class="docutils literal notranslate"><span class="pre">Box</span></code>. Indirection disini berarti daripada kita menyimpan nilai dari <code class="docutils literal notranslate"><span class="pre">List</span></code> yang rekursif secara langsung, kita harus menyimpan sebuah pointer, yang mengarah kepada nilai dari <code class="docutils literal notranslate"><span class="pre">List</span></code> - yaitu <code class="docutils literal notranslate"><span class="pre">Box</span></code> tersebut.</p>
+<p>Sebelum kita membahas mengapa Box menyelesaikan masalah diatas, mari kita bahas bagaimana compiler Rust menghitung enum yang non-rekursif.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="nc">Enum</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">A</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">B</span><span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="p">),</span><span class="w"></span>
+<span class="w">  </span><span class="n">C</span><span class="p">(</span><span class="kt">f64</span><span class="p">,</span><span class="w"> </span><span class="kt">i64</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="p">),</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Disini kita memiliki sebuah <code class="docutils literal notranslate"><span class="pre">enum</span></code> dengan 3 varian dimana dua varian memiliki nilai didalamnya. Cara Rust menghitung besar <code class="docutils literal notranslate"><span class="pre">enum</span></code> diatas adalah dengan mengecek setiap varian dan tipe nilai yang dimiliki varian dan mencari varian mana yang membutuhkan ruang paling banyak - atau varian dengan ukuran terbesar. Karena kita hanya bisa menggunakan satu varian dalam satu waktu, maka besar varian yang paling besar akan menjadi besar dari <code class="docutils literal notranslate"><span class="pre">Enum</span></code> itu sendiri.</p>
+<p>Namun, untuk <code class="docutils literal notranslate"><span class="pre">Cons</span></code> <code class="docutils literal notranslate"><span class="pre">List</span></code> kita, saat Rust bertemu dengan tipe <code class="docutils literal notranslate"><span class="pre">List</span></code> dalam varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code>, ia akan kembali lagi pada <code class="docutils literal notranslate"><span class="pre">List</span></code>, dan berulang terus seperti itu sehingga tidak ada cara untuk mengetahui berapa besar si varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code> kita dan Rust tidak akan tahu juga berapa besar <code class="docutils literal notranslate"><span class="pre">enum</span></code> <code class="docutils literal notranslate"><span class="pre">List</span></code> kita.</p>
+<p>Sekarang, seperti yang Rust compiler sarankan, kita akan me-wrap <code class="docutils literal notranslate"><span class="pre">List</span></code> kita di dalam <code class="docutils literal notranslate"><span class="pre">Box</span></code>. Mari kita lakukan.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">enum</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">Nil</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">use</span><span class="w"> </span><span class="n">List</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Untuk me-wrap nilai dalam Box, gunakan Box::new(nilai)</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">Nil</span><span class="p">))))));</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dan kode kita akan tercompile:
+.. code:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span><span class="w"> </span><span class="n">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span><span class="w"> </span><span class="n">Nil</span><span class="p">)))</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Lalu bagaimanakah <code class="docutils literal notranslate"><span class="pre">Box</span></code> menyelesaikan masalah ini? Pertama-tama, <code class="docutils literal notranslate"><span class="pre">Box</span></code> adalah sebuah pointer. Ukuran dari sebuah pointer itu tetap. Ukuran pointer tidak berdasarkan besar atau jumlah data yang dia tunjuk. <code class="docutils literal notranslate"><span class="pre">Box</span></code> menunjuk pada nilai <code class="docutils literal notranslate"><span class="pre">List</span></code> kita selanjutnya yang berada pada memori heap, bukan pada varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code> sehingga ini akan seperti menaruh sesuatu bersebelahan dengan sesuatu yang lain, bukan menaruh sesuatu didalam sesuatu yang lain dan <code class="docutils literal notranslate"><span class="pre">Box</span></code> menunjuk pada sesuatu yang bersebelahan tersebut yang dalam hal ini adalah nilai dari <code class="docutils literal notranslate"><span class="pre">List</span></code> yang di-wrap dalam <code class="docutils literal notranslate"><span class="pre">Box</span></code> pada varian <code class="docutils literal notranslate"><span class="pre">Cons</span></code>.</p>
+<p>Kesimpulan: Pada Rust, <code class="docutils literal notranslate"><span class="pre">usize</span></code> itu pointer-sized sehingga ukuran dari <code class="docutils literal notranslate"><span class="pre">Cons</span></code> adalah ukuran dari tipe yang kita berikan pada genericnya, dan <code class="docutils literal notranslate"><span class="pre">usize</span></code> karena kita menyimpan pointer.</p>
+</div>
+</div>
+<div class="section" id="deref-trait">
+<h2><a class="toc-backref" href="#id4"><cite>Deref</cite> Trait</a><a class="headerlink" href="#deref-trait" title="Permalink to this heading">¶</a></h2>
+<p>Sebuah smart pointer adalah sebuah tipe yang mengimplementasikan trait Deref dan trait Drop. Di artikel kali ini, kita akan membahas tentang trait Deref yang membuat kita dapat memperlakukan sebuah pointer seperti sebuah reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?</p>
+<p>Sebelum itu, mari kita membahas lebih lanjut tentang Dereferencing.</p>
+<div class="section" id="dereferencing">
+<h3><a class="toc-backref" href="#id5">Dereferencing</a><a class="headerlink" href="#dereferencing" title="Permalink to this heading">¶</a></h3>
+<p>Dereferencing adalah sebuah cara untuk mengakses nilai dari sebuah lokasi memori yang ditunjuk oleh sebuah pointer. Pada Rust, seperti dalam bahasa seperti C++, kita menggunakan operator * untuk dereferencing.</p>
+<p>Sekarang, mari kita lihat kode berikut</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Kita menggunakan macro assert_eq! pada kode diatas untuk mengecek apakah sebuah nilai setara (equal) dengan nilai yang lainnya. Namun, hal yang akan terjadi saat kita compile kode diatas adalah compile error yakni sebagai berikut</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span>error[E0277]: can&#39;t compare `{integer}` with `&amp;{integer}`
+ --&gt; deref.rs:7:2
+  |
+7 |     assert_eq!(10, b);
+  |     ^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
+  |
+  = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
+</pre></div>
+</div>
+<p>Error diatas menyatakan kalau kita tidak bisa membandingkan sebuah integer dengan sebuah reference kepada sebuah integer. Mereka adalah tipe yang berbeda sehingga kita harus menggunakan dereference operator.</p>
+<p>Dereference operator menggunakan tanda asterisk (*)</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Pada Rust, sebuah reference (&amp;) sebenarnya juga merupakan pointer. Jadi, variabel b diatas adalah sebuah pointer yang menyimpan alamat memory a dan menunjuk kepada dimana valuenya, 10 disimpan.</p>
+<p>Pada assertion pertama, kita membandingkan 10 dan a, yang hasilnya adalah benar. Pada assertion kedua, kita membandingkan 10 dan b yang sudah kita dereference sehingga b disana merupakan value yang ia tunjuk, yaitu 10. Kode akan berjalan dengan baik.</p>
+</div>
+<div class="section" id="apa-itu-trait-deref">
+<h3><a class="toc-backref" href="#id6">Apa itu Trait <cite>Deref</cite>?</a><a class="headerlink" href="#apa-itu-trait-deref" title="Permalink to this heading">¶</a></h3>
+<p>Kita dapat memperlakukan sebuah smart pointer seperti sebuah reference biasa.</p>
+<p>Untuk contoh yang lebih lanjut, kita akan mengganti kode diatas dan menggunakan sebuah smart pointer daripada sebuah reference. Kita akan menggunakan <code class="docutils literal notranslate"><span class="pre">Box&lt;T&gt;</span></code>.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Seperti reference, <code class="docutils literal notranslate"><span class="pre">Box</span></code> juga menunjuk kepada nilai yang disimpan di suatu tempat di memori, yang dalam hal ini adalah <code class="docutils literal notranslate"><span class="pre">10</span></code>. Perbedaannya disini adalah <code class="docutils literal notranslate"><span class="pre">b</span></code> menunjuk pada sebuah copy dari <code class="docutils literal notranslate"><span class="pre">10</span></code> karena value tipe primitif akan di-copy, bukan di-move ownershipnya.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Box&lt;T&gt;</span></code> merupakan sebuah smart pointer yang mengimplementasikan trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code>. Inilah yang dimaksud dengan memperlakukan sebuah pointer seperti sebuah reference biasa. Trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> memperbolehkan dereference operator bekerja pada <code class="docutils literal notranslate"><span class="pre">Box&lt;T&gt;</span></code> sama seperti ia bekerja pada reference biasa.</p>
+<p>Untuk mengerti bagaimana itu bekerja, kita akan mendefinisikan sebuah smart pointer kita sendiri yang akan mengimplementasikan <code class="docutils literal notranslate"><span class="pre">Deref</span></code>.</p>
+</div>
+<div class="section" id="mendefinisikan-smart-pointer-kita-sendiri">
+<h3><a class="toc-backref" href="#id7">Mendefinisikan smart pointer kita sendiri</a><a class="headerlink" href="#mendefinisikan-smart-pointer-kita-sendiri" title="Permalink to this heading">¶</a></h3>
+<p>Kita akan mendefiniskan sebuah smart pointer yang serupa dengan <code class="docutils literal notranslate"><span class="pre">Box&lt;T&gt;</span></code>. Hanya saja, disini kita tidak akan menyimpan nilai pada heap. Disini kita akan berfokus pada dereference operator, bukan dimana lokasi data disimpan.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="bp">Self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Sekarang, kita ganti <code class="docutils literal notranslate"><span class="pre">Box&lt;T&gt;</span></code> di fungsi main dengan <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code> kita.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kotak</span>::<span class="n">new</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Namun pada kode diatas, kita akan mendapatkan error dimana kita tidak bisa melakukan dereference pada tipe <code class="docutils literal notranslate"><span class="pre">Kotak</span></code> kita. Sekarang, mari kita implementasikan trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code>.</p>
+</div>
+<div class="section" id="mengimplementasikan-deref-pada-smart-pointer-kita">
+<h3><a class="toc-backref" href="#id8">Mengimplementasikan <cite>Deref</cite> pada smart pointer kita</a><a class="headerlink" href="#mengimplementasikan-deref-pada-smart-pointer-kita" title="Permalink to this heading">¶</a></h3>
+<p>Pertama-tama. panggil trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> di baris paling atas kode.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">ops</span>::<span class="n">Deref</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Lalu kita implementasikan pada <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code>.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">type</span> <span class="nc">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">Target</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Kalian tidak perlu terlalu mengkhawatirkan <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">Target</span> <span class="pre">=</span> <span class="pre">T</span></code> untuk sekarang. Itu adalah sebuah associated type yang akan kita bahas di lain waktu. Kalian juga bisa mengganti return type method <code class="docutils literal notranslate"><span class="pre">deref</span></code> menjadi hanya <code class="docutils literal notranslate"><span class="pre">&amp;T</span></code>.</p>
+<p>Trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> mengharuskan kita untuk mengimplementasikan satu method bernama <code class="docutils literal notranslate"><span class="pre">deref</span></code> yang menerima <code class="docutils literal notranslate"><span class="pre">&amp;self</span></code>, dan mengembalikan sebuah reference kepada inner data atau data didalam <code class="docutils literal notranslate"><span class="pre">struct</span></code> kita. Ingat, kita disini memakai <code class="docutils literal notranslate"><span class="pre">tuple</span> <span class="pre">struct</span></code> yang menggunakan index 0, 1, dan seterusnya untuk mengambil inner data.</p>
+<p>Sekarang, kode kita akan terlihat seperti ini</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">ops</span>::<span class="n">Deref</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="nc">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">Self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">Target</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kotak</span>::<span class="n">new</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Dan assertion kedua kita akan berhasil. Kita akan dapat melakukan dereference pada tipe <code class="docutils literal notranslate"><span class="pre">Kotak</span></code> kita. Kode akan dapat kita compile.</p>
+<p>Tanpa trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code>, compiler hanya mengetahui cara dereference reference saja. Trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> membuat compiler Rust untuk memanggil method <code class="docutils literal notranslate"><span class="pre">deref</span></code> untuk semua tipe yang mengimplementasikannya - untuk mendapatkan sebuah reference kepada sebuah nilai (Self::Target atau &amp;T kita diatas), yang si compiler tahu bagaimana cara dereferencenya.</p>
+<p>Saat kita menggunakan operator dereference kepada sebuah nilai yang telah mengimplementasikan trait <cite>Deref</cite>, assertion kedua kita di atas contohnya, sebenarnya Rust memanggil kode seperti berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">deref</span><span class="p">()));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Rust akan memanggil method <code class="docutils literal notranslate"><span class="pre">deref</span></code> terlebih dahulu untuk mendapatkan reference kepada nilai kita, yang pada kasus diatas adalah <code class="docutils literal notranslate"><span class="pre">10</span></code>, lalu melakukan dereferencing dengan operator dereference sehingga kira-kira hal yang terjadi adalah berikut:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Kotak(10)</span> <span class="pre">-&gt;</span> <span class="pre">deref()</span> <span class="pre">terpanggil</span> <span class="pre">-&gt;</span> <span class="pre">&amp;10</span> <span class="pre">-&gt;</span> <span class="pre">dereference</span> <span class="pre">operator</span> <span class="pre">digunakan</span> <span class="pre">-&gt;</span> <span class="pre">10</span></code></p>
+<p>Karena Rust melakukan hal itu secara otomatis, kita tidak perlu memikirkan perlu atau tidaknya memanggil method <code class="docutils literal notranslate"><span class="pre">deref</span></code> secara eksplisit sehingga kita bisa memperlakukan reference biasa, dan sebuah tipe yang mengimplementasikan trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> dengan sama.</p>
+<p>Lalu kenapa method <code class="docutils literal notranslate"><span class="pre">deref</span></code> mengembalikan reference kepada suatu nilai bukan nilainya itu sendiri?</p>
+<p>Tentunya itu berhubungan dengan ownership pada Rust. Kalau <code class="docutils literal notranslate"><span class="pre">deref</span></code> mengembalikan nilainya secara langsung, maka ownership dari nilai tersebut akan di-move keluar dari tipe kita, yang dalam kasus ini, smart pointer kita Kotak&lt;T&gt;. Dan di banyak kasus saat kita menggunakan operator dereference, kita tidak mau itu terjadi.</p>
+</div>
+</div>
+<div class="section" id="deref-coercion">
+<h2><a class="toc-backref" href="#id9">Deref Coercion</a><a class="headerlink" href="#deref-coercion" title="Permalink to this heading">¶</a></h2>
+<p>Kita telah melihat bagaimana trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> bekerja. Sekarang, kita akan melihat bagaimana trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> bekerja dengan <code class="docutils literal notranslate"><span class="pre">Deref</span> <span class="pre">Coercion</span></code>.</p>
+<p>Deref Coercion adalah sebuah fitur sangat praktis yang Rust akan secara otomatis gunakan pada dan hanya pada tipe yang mengimplementasikan trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code> ketika tipe tersebut dijadikan argumen untuk fungsi atau method. Deref Coercion akan mengubah sebuah reference dari satu tipe kepada sebuah reference dari tipe yang berbeda.</p>
+<p>Untuk lebih jelasnya, mari kita lanjutkan kode diatas dengan menambahkan sebuah prosedur untuk mencetak <cite>&amp;str</cite>.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kotak</span>::<span class="n">new</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">prosedur</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;A adalah: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Sekarang, kita akan membuat sebuah variabel baru yang menggunakan smart pointer <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code> kita dan sebuah <cite>String</cite> untuk nilai didalam <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code> kita, lalu kita panggil prosedur kita dengan variabel tersebut sebagai argumen.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kotak</span>::<span class="n">new</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kotak</span>::<span class="n">new</span><span class="p">(</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Hai&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">prosedur</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">prosedur</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;A adalah: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Seperti yang kalian lihat, prosedur <code class="docutils literal notranslate"><span class="pre">prosedur</span></code> menerima <code class="docutils literal notranslate"><span class="pre">&amp;str</span></code> sebagai argumen. Diatas, kita memberikannya sebuah reference kepada <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code> yang memiliki <code class="docutils literal notranslate"><span class="pre">String</span></code> didalamnya. Namun, kode diatas tidak akan error! Kode diatas akan berjalan dengan sempurna.</p>
+<p>Apa yang terjadi disini?</p>
+<p>Inilah yang terjadi:</p>
+<p>Saat kita memakai operator reference di argumen prosedur pada variabel <code class="docutils literal notranslate"><span class="pre">c</span></code>, method <code class="docutils literal notranslate"><span class="pre">deref</span></code> akan terpanggil dan kita akan mendapatkan sebuah reference kepada <code class="docutils literal notranslate"><span class="pre">String</span></code>, nilai yang kita wrap dalam <code class="docutils literal notranslate"><span class="pre">Kotak&lt;T&gt;</span></code>.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">Kotak</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">String</span>
+</pre></div>
+</div>
+<p>Lalu, karena <code class="docutils literal notranslate"><span class="pre">String</span></code> juga mengimplementasikan trait <code class="docutils literal notranslate"><span class="pre">Deref</span></code>, bila kita menggunakan operator dereference, <code class="docutils literal notranslate"><span class="pre">String</span></code> akan mengembalikan sebuah <code class="docutils literal notranslate"><span class="pre">&amp;str</span></code> sehingga hal yang akan terjadi berikutnya adalah:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">Kotak</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">String</span> -&gt; <span class="kp">&amp;</span><span class="kt">str</span>
+</pre></div>
+</div>
+<p>Rust melakukannya dengan otomatis. Tanpa Deref Coercion, bila ingin melakukan hal seperti diatas, kita harus menuliskannya seperti ini:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">prosedur</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">)[</span><span class="o">..</span><span class="p">]);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Disana kita melakukan dereference pada <code class="docutils literal notranslate"><span class="pre">c</span></code> sehingga kita mendapat sebuah <code class="docutils literal notranslate"><span class="pre">String</span></code>, kemudian <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> dan <code class="docutils literal notranslate"><span class="pre">[..]</span></code> (<code class="docutils literal notranslate"><span class="pre">slice</span></code> yang berisi operator <code class="docutils literal notranslate"><span class="pre">RangeFull</span></code>) akan membuat sebuah <code class="docutils literal notranslate"><span class="pre">&amp;str</span></code> dari si <code class="docutils literal notranslate"><span class="pre">String</span></code> yang setara dengan panjang penuh (full range) si <code class="docutils literal notranslate"><span class="pre">String</span></code>. Sangat merepotkan bukan? Kode akan lebih sulit ditulis dan lebih sulit dibaca. Terima kasih Deref Coercion!</p>
+<p>Untuk mutable reference, kita harus menggunakan trait <code class="docutils literal notranslate"><span class="pre">DerefMut</span></code>.</p>
+<p>Rust melakukan Deref Coercion bila ia bertemu tipe dan implementasi trait dalam tiga kasus:</p>
+<ul class="simple">
+<li><p>Dari <code class="docutils literal notranslate"><span class="pre">&amp;T</span></code> ke <code class="docutils literal notranslate"><span class="pre">&amp;U</span></code> ketika <code class="docutils literal notranslate"><span class="pre">T:</span> <span class="pre">Deref&lt;Target=U&gt;</span></code></p></li>
+<li><p>Dari <code class="docutils literal notranslate"><span class="pre">&amp;mut</span> <span class="pre">T</span></code> ke <code class="docutils literal notranslate"><span class="pre">&amp;mut</span> <span class="pre">U</span></code> ketika <code class="docutils literal notranslate"><span class="pre">T:</span> <span class="pre">DerefMut&lt;Target=U&gt;</span></code></p></li>
+<li><p>Dari <code class="docutils literal notranslate"><span class="pre">&amp;mut</span> <span class="pre">T</span></code> ke <code class="docutils literal notranslate"><span class="pre">&amp;U</span></code> ketika <code class="docutils literal notranslate"><span class="pre">T:</span> <span class="pre">Deref&lt;Target=U&gt;</span></code></p></li>
+</ul>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Generic.html">Generic</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Cargo.html">Cargo</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Hak cipta 2023, mukharomdev.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

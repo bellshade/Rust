@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struktur dan Implementasi &#8212; Pengenalan Rust Bahasa Indonesia</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/haiku.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Pencarian" href="search.html" />
+    <link rel="next" title="Trait" href="Trait.html" />
+    <link rel="prev" title="Loop" href="Loop.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>Pengenalan Rust Bahasa Indonesia</span></a></h1>
+        <h2 class="heading"><span>Struktur dan Implementasi</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Loop.html">Loop</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Trait.html">Trait</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content" role="main">
+        
+        
+  <div class="section" id="struktur-dan-implementasi">
+<h1><a class="toc-backref" href="#id2">Struktur dan Implementasi</a><a class="headerlink" href="#struktur-dan-implementasi" title="Permalink to this heading">¶</a></h1>
+<div class="contents topic" id="overview">
+<p class="topic-title">Overview</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#struktur-dan-implementasi" id="id2">Struktur dan Implementasi</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id3">Struktur dan Implementasi</a></p>
+<ul>
+<li><p><a class="reference internal" href="#struct" id="id4">Struct</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id3">Struktur dan Implementasi</a><a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>Sebuah <code class="docutils literal notranslate"><span class="pre">struct</span></code> atau structure digunakan untuk merepresentasikan tipe data kompleks yang kita definisikan sendiri. Pada Rust, kita dapat membuat sebuah tipe baru dengan menggunakan <code class="docutils literal notranslate"><span class="pre">struct</span></code>. Kita dapat menambahkan method pada <cite>struct</cite> dengan menggunakan implementation block atau <code class="docutils literal notranslate"><span class="pre">impl</span></code>.</p>
+<div class="section" id="struct">
+<h3><a class="toc-backref" href="#id4">Struct</a><a class="headerlink" href="#struct" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">struct</span></code> merupakan sebuah cara untuk mendefinisikan sebuah tipe data yang kompleks. Sebuah <code class="docutils literal notranslate"><span class="pre">struct</span></code> dapat memiliki beberapa field, yang masing-masing dapat memiliki tipe data yang berbeda. Sebagai contoh, kita akan membuat sebuah <code class="docutils literal notranslate"><span class="pre">struct</span></code> yang merepresentasikan seseorang. Kita akan menggunakan <code class="docutils literal notranslate"><span class="pre">struct</span></code> untuk menyimpan data-data yang berkaitan dengan orang tersebut.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Lalu kita dapat membuat sebuah variabel baru bertipe <code class="docutils literal notranslate"><span class="pre">Person</span></code> dengan cara berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Fulan&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="derive-trait">
+<h4><strong>Derive Trait</strong><a class="headerlink" href="#derive-trait" title="Permalink to this heading">¶</a></h4>
+<p>Derive Trait adalah sebuah cara untuk mendapatkan implementasi dari beberapa trait secara otomatis. Sebagai contoh, kita dapat menggunakan <code class="docutils literal notranslate"><span class="pre">#[derive(Debug)]</span></code> untuk mendapatkan implementasi dari trait <code class="docutils literal notranslate"><span class="pre">Debug</span></code> secara otomatis. Contoh penggunaan derive trait adalah sebagai berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Sekarang, kita akan membahas beberapa derive trait berguna yang paling sering dipakai pada bahasa Rust.</p>
+<p>Sebagai catatan, untuk memakai derive trait, seluruh field dalam <code class="docutils literal notranslate"><span class="pre">struct</span></code> harus juga telah mengimplementasikan <code class="docutils literal notranslate"><span class="pre">trait</span></code> yang kita derive tersebut. Karena itu, kita tidak akan bisa menggunakan <code class="docutils literal notranslate"><span class="pre">trait</span></code> <code class="docutils literal notranslate"><span class="pre">Copy</span></code> tanpa <code class="docutils literal notranslate"><span class="pre">Clone</span></code> bila ada <code class="docutils literal notranslate"><span class="pre">String</span></code> didalam field <code class="docutils literal notranslate"><span class="pre">struct</span></code> kita.</p>
+<ul class="simple">
+<li><p><strong>Debug</strong></p></li>
+</ul>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">Debug</span></code> merupakan trait yang sangat berguna untuk melakukan debugging. Ia akan mencetak output sesuai dengan bentuk asli dari tipe kita. Pada macro <code class="docutils literal notranslate"><span class="pre">print!</span></code> atau <code class="docutils literal notranslate"><span class="pre">println!</span></code>, untuk dapat mencetak <code class="docutils literal notranslate"><span class="pre">Debug</span></code>, kita harus menggunakan formatting berikut: <code class="docutils literal notranslate"><span class="pre">:?</span></code>.</p>
+<p>Contoh penggunaan:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Fulan&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// OUTPUT: Person { name: &quot;Fulan&quot;, age: 27 }</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Clone</strong></p></li>
+</ul>
+<hr class="docutils" />
+<p>Masih ingat dengan materi ownership sebelumnya? Dengan mengimplementasikan <code class="docutils literal notranslate"><span class="pre">Clone</span></code>, kita dapat melakukan cloning pada tipe kita dengan method <code class="docutils literal notranslate"><span class="pre">clone()</span></code> seperti yang sudah pernah dijelaskan di materi ownership sebelumnya.</p>
+<p>Contoh penggunaan:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Clone, Debug)]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Fulan&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">person2</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Copy</strong></p></li>
+</ul>
+<hr class="docutils" />
+<p>Seperti <code class="docutils literal notranslate"><span class="pre">Clone</span></code>, <code class="docutils literal notranslate"><span class="pre">Copy</span></code> juga merupakan trait yang berguna untuk melakukan cloning. Namun, <code class="docutils literal notranslate"><span class="pre">Copy</span></code> memiliki beberapa syarat yang harus dipenuhi agar dapat digunakan. Syarat-syarat tersebut adalah sebagai berikut:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Semua field dalam <code class="docutils literal notranslate"><span class="pre">struct</span></code> harus mengimplementasikan <code class="docutils literal notranslate"><span class="pre">Copy</span></code> (Contohnya, kita tidak akan bisa menggunakan <code class="docutils literal notranslate"><span class="pre">Copy</span></code> untuk tipe yang memiliki field bertipe <code class="docutils literal notranslate"><span class="pre">String</span></code> didalamnya.).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">struct</span></code> tidak boleh memiliki implementasi dari <code class="docutils literal notranslate"><span class="pre">Drop</span></code> trait.</p></li>
+</ul>
+</div></blockquote>
+<p>Dengan <code class="docutils literal notranslate"><span class="pre">Copy</span></code>, tipe kita akan melakukan copy secara otomatis ketika kita melakukan assignment, seperti yang telah dijelaskan tentang <code class="docutils literal notranslate"><span class="pre">trait</span> <span class="pre">Copy</span></code> pada artikel ownership sebelumnya. Saat men-derive <code class="docutils literal notranslate"><span class="pre">Copy</span></code>, kita juga harus men-derive <code class="docutils literal notranslate"><span class="pre">Clone</span></code></p>
+<p>Contoh penggunaan:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Copy, Clone, Debug)]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Location</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">lat</span>: <span class="kt">f64</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">lon</span>: <span class="kt">f64</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">loc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">lat</span>: <span class="mf">10.55555</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span>: <span class="mf">20.22222</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">loc2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loc</span><span class="p">;</span><span class="w"> </span><span class="c1">// Copy</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">loc3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loc2</span><span class="p">;</span><span class="w"> </span><span class="c1">// Copy</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">loc</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">loc2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">loc3</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="membuat-format-print-untuk-tipe-kita">
+<h4>Membuat format print untuk tipe kita<a class="headerlink" href="#membuat-format-print-untuk-tipe-kita" title="Permalink to this heading">¶</a></h4>
+<p>Kita dapat membuat format tertentu dan bagaimana kita akan mencetak tipe kita sendiri dengan menggunakan trait <code class="docutils literal notranslate"><span class="pre">Display</span></code>. Untuk <code class="docutils literal notranslate"><span class="pre">Display</span></code>, kita tidak dapat menggunakan derive trait. <code class="docutils literal notranslate"><span class="pre">Display</span></code> akan mengimplementasikan <code class="docutils literal notranslate"><span class="pre">to_string()</span></code> secara otomatis juga pada tipe kita.</p>
+<p>Pneggunaan <code class="docutils literal notranslate"><span class="pre">Display</span></code> adalah sebagai berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#[Clone, Debug]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Display</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">f</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="fm">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Seseorang bernama {} dan berumur {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">age</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Fulan&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">);</span><span class="w"> </span><span class="c1">// Seseorang bernama Fulan dan berumur 27</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">println!</span></code> akan mencetak sesuai dengan yang telah kita definisikan pada implementasi <cite>Display</cite> kita, yang berada didalam macro <code class="docutils literal notranslate"><span class="pre">write!</span></code>.</p>
+</div>
+<div class="section" id="membuat-method-untuk-tipe-kita">
+<h4>Membuat method untuk tipe kita<a class="headerlink" href="#membuat-method-untuk-tipe-kita" title="Permalink to this heading">¶</a></h4>
+<p>Kita dapat membuat method untuk tipe kita sendiri dengan menggunakan <code class="docutils literal notranslate"><span class="pre">impl</span></code> block. Contoh penggunaan adalah sebagai berikut:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Clone, Debug)]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">age</span>: <span class="kt">u8</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">say_hello</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Halo, nama saya {} dan berumur {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">age</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">birthday</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">age</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Fulan&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span>::<span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">person</span><span class="p">.</span><span class="n">say_hello</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Saya ulang tahun!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">person</span><span class="p">.</span><span class="n">birthday</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Umur saya sekarang adalah {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="n">age</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Pada kode diatas, kita memiliki dua tipe method, yaitu method yang dapat langsung dipanggil dari tipenya, dan method yang harus dipanggil melalui variabel yang menyimpan tipe tersebut. Method yang dapat langsung dipanggil dari tipenya disebut dengan method <code class="docutils literal notranslate"><span class="pre">associated</span> <span class="pre">function</span></code>. Method yang harus dipanggil melalui variabel yang menyimpan tipe tersebut disebut dengan method <code class="docutils literal notranslate"><span class="pre">instance</span> <span class="pre">method</span></code>. Method <cite>associated function</cite> biasanya digunakan untuk membuat instance dari tipe tersebut, seperti yang terlihat pada method <cite>new()</cite> pada kode diatas. Ia dipanggil dengan menggunakan <code class="docutils literal notranslate"><span class="pre">::</span></code> setelah nama tipe, seperti yang terlihat pada <code class="docutils literal notranslate"><span class="pre">Person::new(name,</span> <span class="pre">age)</span></code>. Namun, method <cite>instance method</cite> biasanya digunakan untuk melakukan operasi pada instance dari tipe tersebut, seperti yang terlihat pada method <code class="docutils literal notranslate"><span class="pre">say_hello()</span></code> dan <code class="docutils literal notranslate"><span class="pre">birthday()</span></code> pada kode diatas. Ia dipanggil dengan menggunakan <code class="docutils literal notranslate"><span class="pre">.</span></code> setelah variabel yang menyimpan tipe tersebut, seperti yang terlihat pada <code class="docutils literal notranslate"><span class="pre">person.say_hello()</span></code> dan <code class="docutils literal notranslate"><span class="pre">person.birthday()</span></code>.</p>
+<p>// TODO: Tambahkan iterator, operator overloading, etc.</p>
+<p># LATIHAN</p>
+<p>// TODO</p>
+</div>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="Loop.html">Loop</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Konten</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Trait.html">Trait</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Hak cipta 2023, mukharomdev.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

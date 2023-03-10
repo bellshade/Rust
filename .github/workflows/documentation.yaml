@@ -25,8 +25,8 @@
 name: build-sphinx-to-gh-pages
 
 env:
-  GITHUB_ACTOR: annegentle
-  GITHUB_REPOSITORY: annegentle/create-demo
+  GITHUB_ACTOR: mukharomdev
+  GITHUB_REPOSITORY: mukharomdev/Rust-docs-indonesia 
   GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
 
 on: 

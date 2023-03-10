@@ -1,24 +1,60 @@
-name: Docs
-on: [push, pull_request, workflow_dispatch]
-permissions:
-    contents: write
+# name: Docs
+# on: [push, pull_request, workflow_dispatch]
+# permissions:
+#     contents: write
+# jobs:
+#   docs:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-python@v3
+#       - name: Install dependencies
+#         run: |
+#           pip install sphinx sphinx_rtd_theme
+#       - name: Sphinx build
+#         run: |
+#           sphinx-build docs _build
+#       - name: Deploy
+#         uses: peaceiris/actions-gh-pages@v3
+#         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+#         with:
+#           publish_branch: gh-pages
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: _build/
+#           force_orphan: true
+
+name: build-sphinx-to-gh-pages
+
+env:
+  GITHUB_ACTOR: annegentle
+  GITHUB_REPOSITORY: annegentle/create-demo
+  GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
+
+on: 
+  push:
+    branches: [ main ]
+
+
 jobs:
-  docs:
+
+  build_sphinx_job:
     runs-on: ubuntu-latest
+    container: debian:buster-slim
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - name: Install dependencies
+    
+      - name: Get prerequisites and clone repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
         run: |
-          pip install sphinx sphinx_rtd_theme
-      - name: Sphinx build
-        run: |
-          sphinx-build docs _build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        with:
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
-          force_orphan: true
+          set -x
+          apt-get update
+          apt-get install -y git
+          git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+        shell: bash
+
+      - name: Run build script for Sphinx pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
+        run: "docs/buildsite.sh"
+        shell: bash

@@ -221,6 +221,6 @@ Pada kode di atas, terlihat bahwa kita dapat memasukkan tipe apapun yang mengimp
 
 # LATIHAN
 
-TODO
+Buatlah implementasi trait `MakhlukHidup` untuk `struct` `Orang` dan `Kucing` sesuai dengan yang terlihat dalam macro `assert_eq!` pada `src/lib.rs` dan kemudian jalankan `cargo test`!
 
 

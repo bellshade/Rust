@@ -12,6 +12,7 @@ members = [
     "basics/10_trait",
     
     "intermediate/01_generics",
+    "intermediate/02_lifetime",
     
     "algorithms",
 

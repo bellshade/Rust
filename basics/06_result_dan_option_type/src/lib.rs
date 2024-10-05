@@ -1,6 +1,5 @@
 #[cfg(test)]
 mod tests {
-
     // untuk error handling di rust menggunakan result sebagai hasil dari suatu proses
     // result memiliki 2 kondisi utama yaitu Ok = hasil, dan Err = error
 

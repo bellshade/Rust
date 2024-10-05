@@ -14,7 +14,7 @@ mod tests {
     }
 
     #[test]
-    fn result_pattern_matching() {
+    fn result_types() {
         // memanggil function untuk return result terlebih dahulu
         let result = get_ok();
         // memastikan hasil yang di return Ok
@@ -65,7 +65,7 @@ mod tests {
     }
 
     #[test]
-    fn option_pattern_matching() {
+    fn option_types() {
         // memanggil function untuk return option terlebih dahulu
         let option = get_some();
         // memastikan return some value

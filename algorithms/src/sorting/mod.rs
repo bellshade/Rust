@@ -12,7 +12,7 @@ where T: cmp::PartialOrd,
     }
     let mut prev = &arr[0];
 
-    for item arr.iter().skip(1) {
+    for item in arr.iter().skip(1) {
         if prev > item {
             return false;
         }
